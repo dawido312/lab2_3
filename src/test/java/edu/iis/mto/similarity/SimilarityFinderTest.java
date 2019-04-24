@@ -55,4 +55,20 @@ public class SimilarityFinderTest {
         Assert.assertThat("should be 0.2d", similarityFinder.calculateJackardSimilarity(seq, seq2), is(equalTo(result)));
     }
 
+    @Test
+    public void calculateJackardSimilarityWithTwoDifferentSequences()
+    {
+        int[] seq = {1,2,3};
+        int[] seq2 = {4, 5, 6};
+        result = 0.0d;
+
+        similarityFinder = new SimilarityFinder((key, seq1) -> {
+            if (key == seq1[0] || key == seq1[1] || key == seq1[2])
+                return SearchResult.builder().withFound(true).build();
+            else return SearchResult.builder().withFound(false).build();
+        });
+
+        Assert.assertThat("should be 0.0d", similarityFinder.calculateJackardSimilarity(seq, seq2), is(equalTo(result)));
+    }
+
 }
